@@ -11,19 +11,9 @@ namespace XamarinMacTest
 {
 	[Register ("ViewController")]
 	partial class ViewController
-	{
-		[Outlet]
-		AppKit.NSTextField ClickedLabel { get; set; }
-
-		[Action ("ClickedButton:")]
-		partial void ClickedButton (Foundation.NSObject sender);
-		
+	{		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ClickedLabel != null) {
-				ClickedLabel.Dispose ();
-				ClickedLabel = null;
-			}
 		}
 	}
 }

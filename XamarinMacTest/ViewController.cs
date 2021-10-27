@@ -2,12 +2,25 @@
 
 using AppKit;
 using Foundation;
+using XamarinMacTest.Models;
 
 namespace XamarinMacTest
 {
     public partial class ViewController : NSViewController
     {
-        private int numberOfTimesClicked = 0;
+        private Hoge hoge = new Hoge("HOGE");
+
+        [Export("Hoge")]
+        public Hoge Hoge
+        {
+            get { return hoge; }
+            set
+            {
+                WillChangeValue("Hoge");
+                hoge = value;
+                DidChangeValue("Hoge");
+            }
+        }
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -16,8 +29,10 @@ namespace XamarinMacTest
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            ClickedLabel.StringValue = "Button has not been clicked yet.";
+            //hoge.AddObserver("InputString", NSKeyValueObservingOptions.New, (sender) =>
+            //{
+            //    Console.WriteLine($"InputString: {hoge.InputString}");
+            //});
         }
 
         public override NSObject RepresentedObject
@@ -31,12 +46,6 @@ namespace XamarinMacTest
                 base.RepresentedObject = value;
                 // Update the view, if already loaded.
             }
-        }
-
-        partial void ClickedButton(NSObject sender)
-        {
-            // Update counter and label
-            ClickedLabel.StringValue = string.Format("The button has been clicked {0} time{1}.", ++numberOfTimesClicked, (numberOfTimesClicked < 2) ? "" : "s");
         }
     }
 }
